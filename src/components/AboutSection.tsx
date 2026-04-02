@@ -1,0 +1,32 @@
+import SectionBlock from './SectionBlock';
+import AnimatedAvatar from './AnimatedAvatar';
+
+const AboutSection = () => (
+  <SectionBlock id="about" title="About me">
+    <div className="flex flex-col md:flex-row items-center md:items-start gap-12">
+      <AnimatedAvatar />
+      <div className="flex-1">
+        <p className="body-text max-w-2xl">
+          I'm a passionate developer with a deep interest in building clean,
+          performant, and user-centric digital experiences. I believe in the
+          power of minimal design and well-crafted code to communicate ideas
+          effectively.
+        </p>
+        <p className="body-text max-w-2xl mt-6">
+          With experience across mobile and web platforms, I bring a unique
+          perspective to every project — blending technical rigor with creative
+          sensibility.
+        </p>
+        <p className="body-text max-w-2xl mt-6 mb-8">
+          I embrace the philosophy of <strong>vibe coding</strong>—a modern
+          development approach where technical precision meets creative
+          intuition. By blending AI-assisted tools with a strong design
+          aesthetic, I rapidly translate ideas into fluid, highly polished
+          digital experiences while maintaining clean and scalable architecture.
+        </p>
+      </div>
+    </div>
+  </SectionBlock>
+);
+
+export default AboutSection;
