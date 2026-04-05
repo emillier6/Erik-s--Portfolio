@@ -1,6 +1,6 @@
 
 
- # 🚀 Durga Vara Prasad's Portfolio
+ # 🚀 Erik Millier's Portfolio
 
 **A High-Performance Digital Identity built with the Modern Web Stack**
 
@@ -115,8 +115,8 @@ src/
 
 If you have any questions or want to collaborate, feel free to reach out!
 
-- **LinkedIn**: [@vara4u](https://www.linkedin.com/in/erik-millier-montolio-ab46b7205/)
-- **Instagram**: [@d_v_p6](https://www.instagram.com/erik.mimo_6/)
+- **LinkedIn**: [@erik-millier-montolio](https://www.linkedin.com/in/erik-millier-montolio-ab46b7205/)
+- **Instagram**: [@erik.mimo_6](https://www.instagram.com/erik.mimo_6/)
 - **Email**: [erikmimo6@gmail.com](mailto:erikmimo6@gmail.com)
 
 ---
