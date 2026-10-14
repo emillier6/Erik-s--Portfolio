@@ -34,17 +34,31 @@ export const HERO_TAGS = [
 
 export const SKILL_CATEGORIES = [
   {
+    id: 'languages',
+    title: 'Languages',
+    skills: [
+      'TypeScript',
+      'JavaScript',
+      'Python',
+      'Java',
+      'C++',
+      'C',
+      'HTML',
+      'CSS',
+    ],
+  },
+  {
     id: 'frontend',
     title: 'Frontend Development',
     skills: [
       'React',
-      'TypeScript',
-      'JavaScript',
+      'Next.js',
+      'Astro',
       'Tailwind CSS',
+      'Three.js',
       'Framer Motion',
       'Shadcn UI',
       'Vite',
-      'Next.js',
     ],
   },
   {
@@ -54,18 +68,32 @@ export const SKILL_CATEGORIES = [
       'Node.js',
       'Express.js',
       'REST APIs',
+      'Socket.IO',
       'PostgreSQL',
       'MySQL',
       'SQLite',
-      'Socket.IO',
-      'Stripe',
+      'Drizzle ORM',
       'Better Auth',
+      'Stripe',
     ],
   },
   {
+    id: 'embedded',
+    title: 'Embedded & Systems',
+    skills: ['ESP32', 'TinyML', 'Edge Impulse', 'OpenGL', 'PlatformIO'],
+  },
+  {
     id: 'tools',
-    title: 'Tools & Ecosystem',
-    skills: ['Git', 'GitHub', 'Vitest', 'Vercel', 'Docker', 'Linux CLI'],
+    title: 'Tools & Workflow',
+    skills: [
+      'Git',
+      'GitHub',
+      'Docker',
+      'Vitest',
+      'Vercel',
+      'Linux CLI',
+      'Kanban',
+    ],
   },
 ] as const;
 

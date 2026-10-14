@@ -1,4 +1,4 @@
-import { Code2, Server, Wrench, Box } from 'lucide-react';
+import { Braces, Code2, Server, Cpu, Wrench, Box } from 'lucide-react';
 import SectionBlock from './SectionBlock';
 import GithubGraph from './GithubGraph';
 import { SKILL_CATEGORIES } from '@/data/constants';
@@ -7,8 +7,10 @@ const CATEGORY_ICONS: Record<
   (typeof SKILL_CATEGORIES)[number]['id'],
   React.ComponentType<{ className?: string }>
 > = {
+  languages: Braces,
   frontend: Code2,
   backend: Server,
+  embedded: Cpu,
   tools: Wrench,
 };
 
