@@ -73,7 +73,7 @@ export interface Project {
   title: string;
   description: string;
   tags: string[];
-  githubUrl: string;
+  githubUrl?: string;
   liveUrl?: string;
   isNew?: boolean;
 }
@@ -94,6 +94,13 @@ export const PROJECTS: Project[] = [
       'PostgreSQL',
     ],
     githubUrl: 'https://github.com/emillier6/atelier-store',
+  },
+  {
+    title: 'Vilahack — Hackathon Platform',
+    description:
+      'Built with another GameDEV-UPC member: 4 interconnected web apps (landing, registration, puzzle dashboard and admin panel) that supported 157 real users on event day. Coordinated the team through a self-hosted Kanban board.',
+    tags: ['HTML', 'CSS', 'JavaScript', 'GameDEV-UPC'],
+    liveUrl: 'https://vilahack.com',
   },
   {
     title: 'Battleship Web',
