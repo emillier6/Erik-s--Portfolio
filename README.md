@@ -115,7 +115,6 @@ src/
 If you have any questions or want to collaborate, feel free to reach out!
 
 - **LinkedIn**: [@erik-millier-montolio](https://www.linkedin.com/in/erik-millier-montolio-ab46b7205/)
-- **Instagram**: [@erik.mimo_6](https://www.instagram.com/erik.mimo_6/)
 - **Email**: [erikmimo6@gmail.com](mailto:erikmimo6@gmail.com)
 
 ---

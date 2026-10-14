@@ -93,11 +93,6 @@ export const SOCIAL_LINKS = [
     href: 'https://www.linkedin.com/in/erik-millier-montolio-ab46b7205/',
   },
   {
-    id: 'instagram',
-    label: 'Instagram',
-    href: 'https://www.instagram.com/erik.mimo_6/',
-  },
-  {
     id: 'email',
     label: 'Email',
     href: 'mailto:erikmimo6@gmail.com',

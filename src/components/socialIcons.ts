@@ -1,5 +1,5 @@
 import type { ComponentType } from 'react';
-import { FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa6';
+import { FaGithub, FaLinkedin } from 'react-icons/fa6';
 import { Mail } from 'lucide-react';
 import type { SocialLinkId } from '@/data/constants';
 
@@ -10,6 +10,5 @@ export const SOCIAL_ICONS: Record<
 > = {
   github: FaGithub,
   linkedin: FaLinkedin,
-  instagram: FaInstagram,
   email: Mail,
 };
