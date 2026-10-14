@@ -56,15 +56,20 @@ const CustomCursor = () => {
     <div
       className={`fixed top-0 left-0 pointer-events-none z-[9999] hidden md:block transition-opacity duration-300 ${
         isVisible ? 'opacity-100' : 'opacity-0'
+      } ${
+        // Inverts the white outline so it stays visible on light and dark targets
+        isHovering ? 'mix-blend-difference' : ''
       }`}
       style={{
         transform: `translate3d(${position.x}px, ${position.y}px, 0)`,
       }}
     >
-      {/* Outer Square */}
+      {/* Outer Square — becomes a transparent outline over clickables */}
       <div
-        className={`absolute -translate-x-1/2 -translate-y-1/2 border-2 border-black bg-white transition-all duration-200 ease-out rounded-none ${
-          isHovering ? 'w-10 h-10 rotate-45 bg-black' : 'w-6 h-6 rotate-0'
+        className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ease-out rounded-none ${
+          isHovering
+            ? 'w-10 h-10 rotate-45 border-2 border-white bg-transparent'
+            : 'w-6 h-6 rotate-0 border-2 border-black bg-white'
         } ${isClicking ? 'scale-75' : 'scale-100'}`}
         style={{
           boxShadow: isHovering ? 'none' : '4px 4px 0px 0px rgba(0,0,0,1)',
@@ -78,16 +83,6 @@ const CustomCursor = () => {
         }`}
       >
         <div className="w-1 h-1 bg-black rounded-none" />
-      </div>
-
-      {/* Hover "Plus" sign inside when hovering */}
-      <div
-        className={`absolute -translate-x-1/2 -translate-y-1/2 transition-all duration-200 ${
-          isHovering ? 'opacity-100 scale-100' : 'opacity-0 scale-50'
-        }`}
-      >
-        <div className="w-4 h-[2px] bg-white absolute -translate-x-1/2 -translate-y-1/2" />
-        <div className="h-4 w-[2px] bg-white absolute -translate-x-1/2 -translate-y-1/2" />
       </div>
     </div>
   );
