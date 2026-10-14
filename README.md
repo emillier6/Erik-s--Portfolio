@@ -1,6 +1,4 @@
-
-
- # 🚀 Erik Millier's Portfolio
+# 🚀 Erik Millier's Portfolio
 
 **A High-Performance Digital Identity built with the Modern Web Stack**
 
@@ -51,10 +49,10 @@ Welcome to my portfolio! This project is more than just a resume; it's a showcas
 
 ### **Utilities & Data**
 
-- **State Management**: TanStack Query (React Query)
-- **Forms**: React Hook Form
-- **Validation**: Zod
+- **Content**: single source of truth in `src/data/constants.ts`
+- **Contact Form**: [Web3Forms](https://web3forms.com)
 - **GitHub Data**: `react-github-calendar`
+- **Brand Icons**: `react-icons`
 
 ---
 
@@ -64,8 +62,8 @@ Follow these steps to set up the project locally:
 
 ### **1. Prerequisites**
 
-- Node.js (v18.0.0 or higher)
-- npm or bun
+- Node.js (v20.19 or higher)
+- npm
 
 ### **2. Installation**
 
@@ -103,6 +101,7 @@ npm run build
 src/
 ├── components/     # high-level UI sections (Hero, Terminal, etc.)
 │   └── ui/         # shadcn/ui base components
+├── data/           # constants.ts — all profile content
 ├── hooks/          # custom React hooks & logic
 ├── pages/          # layout pages (Index.tsx)
 ├── App.tsx         # routing and core app wrapper
@@ -120,9 +119,9 @@ If you have any questions or want to collaborate, feel free to reach out!
 - **Email**: [erikmimo6@gmail.com](mailto:erikmimo6@gmail.com)
 
 ---
+
 <div align="center">
   <h2 style="font-size:28px; animation: glow 2s ease-in-out infinite alternate;">
     Built with 🖤 and good dose of coffee by Erik Millier Montolio.
   </h2>
 </div>
-

@@ -14,7 +14,13 @@ import {
   playClick,
 } from '@/hooks/useSoundEffects';
 import { useIsMobile } from '@/hooks/use-mobile';
-import { PROFILE, SOCIAL_LINKS, getSocialLink } from '@/data/constants';
+import {
+  PROFILE,
+  PROJECTS,
+  SKILL_CATEGORIES,
+  SITE_VERSION,
+  getSocialLink,
+} from '@/data/constants';
 
 interface CommandOutput {
   id: number;
@@ -39,9 +45,9 @@ const Terminal = () => {
       type: 'response',
       content: (
         <div className="mb-2">
-          <p>Welcome to Erik's Portfolio Terminal v1.0.0</p>
+          <p>Welcome to Erik's Portfolio Terminal v{SITE_VERSION}</p>
           <p>
-            I am a conversational AI. Type{' '}
+            I am a virtual assistant. Type{' '}
             <span className="text-green-400">help</span> for commands, or just
             chat with me!
           </p>
@@ -121,45 +127,57 @@ const Terminal = () => {
           return (
             <div className="grid grid-cols-2 gap-2 text-blue-400">
               <span>README.md</span>
-              {/*<span>experience.txt</span>
-              <span>education.txt</span>
-              <span>roadmap.sh</span>*/}
+              <span>roadmap.sh</span>
             </div>
           );
         case 'cat readme.md':
-          return "Erik's Portfolio v1.0.0. Built with React, TypeScript, and a reckless amount of neobrutalism.";
-        /*case 'cat experience.txt':
-          return 'Freelance Developer @ AOTMS. Built scalable transport systems and loved every second of it.';
-        case 'cat education.txt':
-          return 'Currently exploring the depths of CSE, specializing in Blockchain and AI.';
+          return `Erik's Portfolio v${SITE_VERSION}. Built with React, TypeScript, and a reckless amount of neobrutalism.`;
         case 'cat roadmap.sh':
-          return 'Next up: Master Aptos Move, scale AI Voice Editor, and keep vibe coding.';*/
+          return 'Next up: AI Engineering, and keep vibe coding.';
         case 'about':
-          return `I'm ${PROFILE.name}, a passionate developer specializing in React. I love building modern, high-performance applications.`;
+          return `I'm ${PROFILE.name}, a ${PROFILE.title} specializing in React. I love building modern, high-performance applications.`;
         case 'skills':
           return (
             <div>
-              <p className="mb-1 text-yellow-400">CORE STACK:</p>
-              <p>• React / TypeScript</p>
-              <p>• Firebase / Node.js</p>
+              {SKILL_CATEGORIES.map((category) => (
+                <div key={category.id} className="mb-1">
+                  <p className="text-yellow-400">
+                    {category.title.toUpperCase()}:
+                  </p>
+                  <p>• {category.skills.join(' / ')}</p>
+                </div>
+              ))}
             </div>
           );
         case 'projects':
+          if (PROJECTS.length === 0) {
+            return (
+              <p>
+                No featured projects yet. Browse my code at{' '}
+                <a
+                  href={github.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-400 hover:underline"
+                >
+                  {github.href.replace('https://', '')}
+                </a>
+              </p>
+            );
+          }
           return (
             <div className="flex flex-col gap-1">
               <p className="mb-1 text-purple-400">RECENT WORK:</p>
-              <a href="#projects" className="text-blue-400 hover:underline">
-                1. Lakshmi Fashion Designers (LATEST)
-              </a>
-              <a href="#projects" className="text-blue-400 hover:underline">
-                2. AI Voice Editor
-              </a>
-              <a href="#projects" className="text-blue-400 hover:underline">
-                3. SafeTrip Pro (Safety App)
-              </a>
-              <a href="#projects" className="text-blue-400 hover:underline">
-                4. AOTMS (Freelance)
-              </a>
+              {PROJECTS.map((project, i) => (
+                <a
+                  key={project.title}
+                  href="#projects"
+                  className="text-blue-400 hover:underline"
+                >
+                  {i + 1}. {project.title}
+                  {project.isNew && ' (LATEST)'}
+                </a>
+              ))}
             </div>
           );
         case 'contact':
@@ -268,9 +286,7 @@ const Terminal = () => {
           newHistory.push({
             id: Date.now() + 1,
             type: 'response',
-            content: (
-              <span className="text-yellow-400">Exited game mode.</span>
-            ),
+            content: <span className="text-yellow-400">Exited game mode.</span>,
           });
           playTerminalClose();
         } else if (isNaN(num)) {
@@ -366,19 +382,31 @@ const Terminal = () => {
       }
 
       if (cmdName === 'theme') {
-        const t = args[0];
-        if (t === 'green') {
-          setTerminalTheme('text-green-400');
-          playSuccess();
-        } else if (t === 'amber' || t === 'yellow') {
-          setTerminalTheme('text-amber-400');
-          playSuccess();
-        } else if (t === 'white') {
-          setTerminalTheme('text-white/90');
+        const themes: Record<string, string> = {
+          green: 'text-green-400',
+          amber: 'text-amber-400',
+          yellow: 'text-amber-400',
+          white: 'text-white/90',
+        };
+        const themeClass = themes[args[0]];
+        if (themeClass) {
+          setTerminalTheme(themeClass);
           playSuccess();
         } else {
           playError();
         }
+        newHistory.push({
+          id: Date.now() + 1,
+          type: themeClass ? 'response' : 'error',
+          content: themeClass ? (
+            `Theme set to ${args[0]}.`
+          ) : (
+            <span className="text-red-400">
+              Usage: theme [green | amber | white]
+            </span>
+          ),
+        });
+        setHistory(newHistory);
         return;
       }
 
@@ -499,7 +527,10 @@ const Terminal = () => {
   return (
     <div
       className="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm p-4 animate-in fade-in duration-300"
-      onClick={() => setIsOpen(false)}
+      onClick={() => {
+        playTerminalClose();
+        setIsOpen(false);
+      }}
       onTouchStart={handleTouchStart}
       onTouchMove={handleTouchMove}
       onTouchEnd={handleTouchEnd}
@@ -532,9 +563,13 @@ const Terminal = () => {
               aria-label="Toggle maximize"
             />
             <div
-              className="w-3 h-3 rounded-none bg-green-500 hover:bg-green-600 cursor-pointer"
+              className="w-3 h-3 rounded-none bg-green-500 hover:bg-green-600 cursor-pointer active:scale-90 transition-transform"
+              onClick={() => {
+                playTerminalClose();
+                setIsOpen(false);
+              }}
               role="button"
-              aria-label="Minimize"
+              aria-label="Minimize terminal"
             />
             <span className="ml-2 text-white/60 text-xs">
               guest@erik-portfolio:~

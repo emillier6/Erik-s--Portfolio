@@ -1,25 +1,13 @@
-import {
-  Github,
-  Linkedin,
-  InstagramIcon,
-  Mail,
-  Heart,
-} from 'lucide-react';
+import { Heart } from 'lucide-react';
+import { SOCIAL_ICONS } from './socialIcons';
 import { PROFILE, SOCIAL_LINKS } from '@/data/constants';
-
-const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
-  github: Github,
-  linkedin: Linkedin,
-  email: Mail,
-  instagram: InstagramIcon,
-};
 
 const Finale = () => {
   const currentYear = new Date().getFullYear();
 
   const marqueeTags = [
     `${PROFILE.shortName} 🚀`,
-    'Full Stack Dev | React | AI',
+    `${PROFILE.title} | React | Node.js`,
     'Designing clean UI/UX + Smart solutions🔖',
     'Exploring tech through Vibe Coding',
   ];
@@ -61,8 +49,7 @@ const Finale = () => {
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 w-full mb-24">
           {SOCIAL_LINKS.map((link) => {
-            const Icon = ICON_MAP[link.id];
-            if (!Icon) return null;
+            const Icon = SOCIAL_ICONS[link.id];
             return (
               <a
                 key={link.id}
@@ -85,7 +72,7 @@ const Finale = () => {
           <div className="flex items-center gap-2 px-4 py-2 bg-green-100 border-2 border-green-600 rounded-none">
             <span className="inline-block w-1.5 h-1.5 bg-green-400 rounded-none mr-1.5 animate-pulse" />
             <span className="text-[10px] font-black uppercase tracking-widest text-green-800">
-              Available for Freelance Projects
+              {PROFILE.availability}
             </span>
           </div>
           <p className="text-xs font-mono text-black/70 uppercase tracking-widest leading-loose max-w-sm">

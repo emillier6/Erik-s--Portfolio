@@ -1,8 +1,6 @@
-import { useState } from 'react';
+import { PROFILE } from '@/data/constants';
 
 const AnimatedAvatar = () => {
-  const [imageError, setImageError] = useState(false);
-
   return (
     <div className="relative w-48 h-48 md:w-64 md:h-64 mx-auto md:mx-0 shrink-0 group">
       {/* Brutalist offset shadow */}
@@ -12,14 +10,12 @@ const AnimatedAvatar = () => {
       <div className="relative w-full h-full border-2 border-black bg-white overflow-hidden group-hover:-translate-x-0.5 group-hover:-translate-y-0.5 transition-transform duration-300">
         <div className="w-full h-full animate-[float_6s_ease-in-out_infinite]">
           <img
-            src="https://i.ibb.co/20jtF9Lm/Chat-GPT-Image-Feb-14-2026-10-13-36-PM.png"
-            alt="Erik Millier Montolio"
+            src="/images/avatar.webp"
+            alt={PROFILE.name}
             className="w-full h-full object-cover object-top"
             loading="eager"
           />
         </div>
-
-        {/* Subtle scan line overlay */}
 
         {/* Subtle scan line overlay */}
         <div
@@ -32,7 +28,10 @@ const AnimatedAvatar = () => {
       </div>
 
       {/* Status badge */}
-      <div className="absolute -bottom-3 -right-3 bg-black text-white px-3 py-1 text-[10px] font-mono uppercase tracking-widest border border-black z-10">
+      <div
+        title={PROFILE.availability}
+        className="absolute -bottom-3 -right-3 bg-black text-white px-3 py-1 text-[10px] font-mono uppercase tracking-widest border border-black z-10"
+      >
         <span className="inline-block w-1.5 h-1.5 bg-green-400 rounded-none mr-1.5 animate-pulse" />
         Available
       </div>

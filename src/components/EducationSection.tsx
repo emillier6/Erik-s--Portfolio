@@ -3,9 +3,9 @@ import SectionBlock from './SectionBlock';
 const education = [
   {
     degree:
-      'Bachelor of Science (B.Sc.) in Computer Science, Escola Politècnica Superior d\'Enginyeria de Vilanova i la Geltrú, Barcelona',
+      "Bachelor of Science (B.Sc.) in Computer Science, Escola Politècnica Superior d'Enginyeria de Vilanova i la Geltrú, Barcelona",
     school: 'Universitat Politècnica de Catalunya',
-    year: '2022 – 2026',
+    year: '2022 – 2027',
   },
 ];
 

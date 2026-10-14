@@ -1,24 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useSyncExternalStore } from 'react';
 import { Volume2, VolumeX } from 'lucide-react';
-import useSoundEffects from '@/hooks/useSoundEffects';
+import {
+  isMuted as getMuted,
+  setMuted,
+  subscribeMuted,
+  playClick,
+  playHover,
+} from '@/hooks/useSoundEffects';
 
 const SoundToggle = () => {
-  const { setMasterVolume, getMasterVolume, playClick, playHover } = useSoundEffects();
-  const [isMuted, setIsMuted] = useState(false);
-
-  useEffect(() => {
-    const saved = localStorage.getItem('site_muted');
-    if (saved === 'true') {
-      setIsMuted(true);
-      setMasterVolume(0);
-    }
-  }, [setMasterVolume]);
+  // Shared store keeps the desktop and mobile toggles in sync
+  const isMuted = useSyncExternalStore(subscribeMuted, getMuted);
 
   const toggleSound = () => {
     const newMuted = !isMuted;
-    setIsMuted(newMuted);
-    setMasterVolume(newMuted ? 0 : 0.8);
-    localStorage.setItem('site_muted', String(newMuted));
+    setMuted(newMuted);
     if (!newMuted) {
       // Small feedback sound when unmuting
       setTimeout(() => playClick(), 50);

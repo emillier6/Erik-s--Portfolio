@@ -25,12 +25,48 @@ const getCtx = (): AudioContext | null => {
   return ctx;
 };
 
+// ---------------------------------------------------------------------------
+// Mute state — shared by every SoundToggle instance, persisted in localStorage
+// ---------------------------------------------------------------------------
+
+const MUTED_KEY = 'site_muted';
+const DEFAULT_VOLUME = 0.8;
+
+const readMuted = () => {
+  try {
+    return localStorage.getItem(MUTED_KEY) === 'true';
+  } catch {
+    return false;
+  }
+};
+
+let muted = typeof window !== 'undefined' && readMuted();
+const muteListeners = new Set<() => void>();
+
 /** Master volume (0–1). Users can mute site-wide. */
-let masterVolume = 0.8;
+let masterVolume = muted ? 0 : DEFAULT_VOLUME;
 export const setMasterVolume = (v: number) => {
   masterVolume = Math.max(0, Math.min(1, v));
 };
 export const getMasterVolume = () => masterVolume;
+
+export const isMuted = () => muted;
+export const setMuted = (value: boolean) => {
+  muted = value;
+  setMasterVolume(value ? 0 : DEFAULT_VOLUME);
+  try {
+    localStorage.setItem(MUTED_KEY, String(value));
+  } catch {
+    // Storage unavailable (private mode) — mute still applies for this session
+  }
+  muteListeners.forEach((listener) => listener());
+};
+export const subscribeMuted = (listener: () => void) => {
+  muteListeners.add(listener);
+  return () => {
+    muteListeners.delete(listener);
+  };
+};
 
 // ---------------------------------------------------------------------------
 // Primitive helpers

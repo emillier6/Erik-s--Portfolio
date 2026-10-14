@@ -1,14 +1,14 @@
 import { useState } from 'react';
 import { playClick, playHover } from '@/hooks/useSoundEffects';
 import SoundToggle from './SoundToggle';
+import { PROJECTS } from '@/data/constants';
 
 const links = [
   { label: 'About', href: '#about' },
   { label: 'Education', href: '#education' },
-  // { label: 'Experience', href: '#experience' },
-  { label: 'Work', href: '#projects' },
+  // Projects section is hidden while PROJECTS is empty
+  ...(PROJECTS.length > 0 ? [{ label: 'Work', href: '#projects' }] : []),
   { label: 'Skills', href: '#skills' },
-
   { label: 'Contact', href: '#contact' },
 ];
 

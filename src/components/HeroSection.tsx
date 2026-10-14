@@ -1,26 +1,16 @@
 import { useState, useEffect, useRef } from 'react';
 import { playClick, playHover } from '@/hooks/useSoundEffects';
-import {
-  Github,
-  Linkedin,
-  Mail,
-  ChevronDown,
-  InstagramIcon,
-} from 'lucide-react';
+import { ChevronDown } from 'lucide-react';
 import Magnetic from './Magnetic';
-import { PROFILE, SOCIAL_LINKS } from '@/data/constants';
-
-const roles = [
-  'React Engineer',
-  'Full-Stack Creator',
-];
-
-const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
-  github: Github,
-  linkedin: Linkedin,
-  instagram: InstagramIcon,
-  email: Mail,
-};
+import { SOCIAL_ICONS } from './socialIcons';
+import {
+  PROFILE,
+  SOCIAL_LINKS,
+  ROLES,
+  HERO_TAGS,
+  PROJECTS,
+  SITE_VERSION,
+} from '@/data/constants';
 
 const HeroSection = () => {
   const [roleIndex, setRoleIndex] = useState(0);
@@ -39,21 +29,23 @@ const HeroSection = () => {
 
   // Typewriter effect
   useEffect(() => {
-    const currentRole = roles[roleIndex];
-    const typeSpeed = isDeleting ? 40 : 80;
+    const currentRole = ROLES[roleIndex];
 
+    // Pause on the full word before deleting
+    if (!isDeleting && displayText === currentRole) {
+      const pause = setTimeout(() => setIsDeleting(true), 2000);
+      return () => clearTimeout(pause);
+    }
+
+    const typeSpeed = isDeleting ? 40 : 80;
     const timeout = setTimeout(() => {
       if (!isDeleting) {
         setDisplayText(currentRole.slice(0, displayText.length + 1));
-        if (displayText.length === currentRole.length) {
-          setTimeout(() => setIsDeleting(true), 2000);
-        }
+      } else if (displayText.length === 0) {
+        setIsDeleting(false);
+        setRoleIndex((prev) => (prev + 1) % ROLES.length);
       } else {
         setDisplayText(currentRole.slice(0, displayText.length - 1));
-        if (displayText.length === 0) {
-          setIsDeleting(false);
-          setRoleIndex((prev) => (prev + 1) % roles.length);
-        }
       }
     }, typeSpeed);
 
@@ -72,17 +64,19 @@ const HeroSection = () => {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
+    const chars = '01{}[]<>/*#=+-;:.abcdefghijklmnopqrstuvwxyz';
+    const fontSize = 14;
+    let drops: number[] = [];
+
     const resize = () => {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
+      // Keep existing columns, add new ones when the viewport grows
+      const columns = Math.floor(canvas.width / fontSize);
+      drops = Array.from({ length: columns }, (_, i) => drops[i] ?? 1);
     };
     resize();
     window.addEventListener('resize', resize);
-
-    const chars = '01{}[]<>/*#=+-;:.abcdefghijklmnopqrstuvwxyz';
-    const fontSize = 14;
-    const columns = Math.floor(canvas.width / fontSize);
-    const drops: number[] = Array(columns).fill(1);
 
     let lastFrameTime = 0;
     const frameInterval = 60; // ~16fps throttle
@@ -140,11 +134,11 @@ const HeroSection = () => {
         <p className="font-mono text-xs text-foreground/90 leading-relaxed font-medium">
           // portfolio.tsx
           <br />
-          // version: 4.0.0
+          // version: {SITE_VERSION}
           <br />
           // status: production
           <br />
-          // last_build: {new Date().toISOString().split('T')[0]}
+          // last_build: {__BUILD_DATE__}
         </p>
       </div>
 
@@ -197,12 +191,7 @@ const HeroSection = () => {
 
         {/* Tech tags */}
         <div className="flex flex-wrap gap-2 justify-center mt-8 max-w-md mx-auto">
-          {[
-            'React',
-            'TypeScript',
-            'Node.js',
-            'Three.js',
-          ].map((tech) => (
+          {HERO_TAGS.map((tech) => (
             <span
               key={tech}
               className="px-3 py-1 font-mono text-xs border-2 border-foreground/40 text-foreground/80 font-medium tracking-wider hover:bg-foreground hover:text-background transition-all duration-300 cursor-default rounded-none"
@@ -216,8 +205,7 @@ const HeroSection = () => {
         {/* Social links */}
         <div className="flex gap-4 justify-center mt-10">
           {SOCIAL_LINKS.map((link) => {
-            const Icon = ICON_MAP[link.id];
-            if (!Icon) return null;
+            const Icon = SOCIAL_ICONS[link.id];
             return (
               <Magnetic key={link.id} strength={0.3}>
                 <a
@@ -261,8 +249,7 @@ const HeroSection = () => {
       {/* Bottom-right stats */}
       <div className="absolute bottom-10 right-6 md:right-10 z-10 hidden md:block">
         <div className="font-mono text-xs text-foreground text-right leading-relaxed font-medium">
-          <p>const experience = "1+ years";</p>
-          <p>const projects = 2;</p>
+          <p>const projects = {PROJECTS.length};</p>
           <p>const passion = ∞;</p>
         </div>
       </div>

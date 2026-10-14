@@ -6,9 +6,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**AnisPort** is a personal portfolio website for Durga Vara Prasad — a static, client-side React SPA with a neo-brutalist aesthetic. Features include a matrix rain hero animation, interactive terminal (Ctrl+K), GitHub contribution graph, and WhatsApp-integrated contact form. **No backend, no API routes, no environment variables.**
+A personal portfolio website for Erik Millier Montolio — a static, client-side React SPA with a neo-brutalist aesthetic. Features include a matrix rain hero animation, interactive terminal (Ctrl+K), GitHub contribution graph, and a contact form that posts to Web3Forms. **No backend, no API routes, no environment variables.**
 
-Live demo: https://vara-s-portfolio.vercel.app/
+Live demo: https://erik-s-portfolio.vercel.app/
 
 ---
 
@@ -42,7 +42,7 @@ npx shadcn@latest add <component-name>
 
 ### Section Composition Pattern
 
-Every portfolio section is a standalone component in `src/components/` that wraps its content in `<SectionBlock>`, which provides consistent fade-in scroll animation via IntersectionObserver. The render order in `Index.tsx` is: Navbar → HeroSection → AboutSection → EducationSection → ExperienceSection → ProjectsSection → BlogSection → SkillsSection → ContactSection → Finale.
+Every portfolio section is a standalone component in `src/components/` that wraps its content in `<SectionBlock>`, which provides consistent fade-in scroll animation via IntersectionObserver. The render order in `Index.tsx` is: Navbar → HeroSection → AboutSection → EducationSection → ProjectsSection → SkillsSection → ContactSection → Finale. ProjectsSection (and its navbar link) renders nothing while `PROJECTS` is empty.
 
 Global overlays (CustomCursor, EasterEgg, ScrollToTop, Terminal) render alongside sections but are not wrapped in SectionBlock.
 
@@ -50,8 +50,13 @@ Global overlays (CustomCursor, EasterEgg, ScrollToTop, Terminal) render alongsid
 
 - **HeroSection.tsx** — Canvas-based matrix rain using `requestAnimationFrame`. The animation loop **must** be cancelled in the `useEffect` cleanup to avoid memory leaks.
 - **Terminal.tsx** — Global keyboard shortcut (`Ctrl+K`) for open/close. Internal command registry; add new commands to the handler inside the component.
-- **ContactSection.tsx** — Constructs WhatsApp deep links from form fields. Phone number and email are **hardcoded** in the component.
-- **GithubGraph.tsx** — Uses `react-github-calendar` with username `VARA4u-tech` (hardcoded).
+- **ContactSection.tsx** — POSTs the form to Web3Forms using `WEB3FORMS_ACCESS_KEY` from `src/data/constants.ts` (public key, safe to commit).
+- **GithubGraph.tsx** — Uses `react-github-calendar`; the username is derived from the GitHub link in `SOCIAL_LINKS`.
+- **SoundToggle.tsx** — Rendered twice (desktop + mobile); mute state lives in a shared store in `src/hooks/useSoundEffects.ts` (`isMuted` / `setMuted` / `subscribeMuted`).
+
+### Content Data
+
+All profile content lives in `src/data/constants.ts`: `PROFILE` (name, title, email, availability), `SOCIAL_LINKS`, `ROLES`, `HERO_TAGS`, `SKILL_CATEGORIES`, `PROJECTS`, `SITE_VERSION`, `WEB3FORMS_ACCESS_KEY`. Hero, Terminal, Skills, Projects, Contact and Finale all read from it — edit content there, never inline in components. Social brand icons come from `react-icons` via `src/components/socialIcons.ts` (lucide brand icons are deprecated).
 
 ### Path Alias
 
@@ -62,22 +67,26 @@ All src imports use `@/` alias: `import { cn } from "@/lib/utils"`. Configured i
 ## Key Conventions
 
 ### Styling
+
 - **Tailwind utility classes** are the primary styling method
 - Theme-aware colors via CSS variables: `bg-background`, `text-foreground`, `text-primary`, etc.
 - Custom utility classes in `src/index.css`: `heading-brutal`, `section-title`, `body-text`, `nav-link`
-- Dark mode is class-based (`dark` on `<html>`) via `next-themes`
+- The site is light-only: there is no `ThemeProvider` and no `.dark` tokens (`next-themes` stays installed only because `ui/sonner.tsx` imports it)
 - Prefer CSS keyframes (in `index.css`) or `tailwindcss-animate` utilities over inline style animations
 
 ### TypeScript
+
 - Strict mode is **off** (`strictNullChecks: false`, `noImplicitAny: false`)
 - Type annotations are pragmatic, not exhaustive
 
 ### State Management
+
 - Local: `useState` / `useReducer`
 - Server/async: TanStack React Query (provider is set up in App.tsx)
 - Global UI: React Context only — no Redux or Zustand
 
 ### Testing
+
 - Vitest with globals enabled — no `import { describe, it, expect }` needed
 - `@testing-library/react` for component rendering
 - `window.matchMedia` is mocked in `src/test/setup.ts`
@@ -93,7 +102,7 @@ All src imports use `@/` alias: `import { cn } from "@/lib/utils"`. Configured i
 - Do not modify `src/components/ui/` files manually — use `npx shadcn@latest add`
 - Do not skip `<SectionBlock>` wrapper for new portfolio sections
 - Do not introduce environment variable requirements without updating this file
-- All config (social links, contact info, GitHub username) is hardcoded in components — update directly
+- Do not hardcode profile content in components — add it to `src/data/constants.ts`
 
 ---
 
@@ -108,6 +117,7 @@ All src imports use `@/` alias: `import { cn } from "@/lib/utils"`. Configured i
 
 ## Git & Branching
 
-- Main branch: `master`
+- Main branch: `main`
 - Feature branches: descriptive names, e.g., `feature/add-blog-section`
-- No CI/CD pipeline or automated deployment configured
+- Deployed on Vercel; `vercel.json` rewrites all paths to `index.html` so unknown routes render `NotFound`
+- Use npm only (`package-lock.json`); do not add other lockfiles
