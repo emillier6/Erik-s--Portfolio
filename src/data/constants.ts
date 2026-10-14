@@ -79,7 +79,66 @@ export interface Project {
 }
 
 /** Add projects here — the Projects section, navbar link, hero stats and terminal all read from this list */
-export const PROJECTS: Project[] = [];
+export const PROJECTS: Project[] = [
+  {
+    title: 'Atelier Store',
+    isNew: true,
+    description:
+      'Luxury brand storefront built on the Next.js App Router, with authentication and a serverless Postgres database.',
+    tags: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Better Auth',
+      'Drizzle ORM',
+      'PostgreSQL',
+    ],
+    githubUrl: 'https://github.com/emillier6/atelier-store',
+  },
+  {
+    title: 'Battleship Web',
+    description:
+      'Real-time online multiplayer take on the classic Battleship board game, with a 3D board and drag-and-drop ship placement. pnpm monorepo sharing tested game logic between client and server.',
+    tags: [
+      'TypeScript',
+      'React',
+      'Astro',
+      'Three.js',
+      'Node.js',
+      'Express.js',
+      'Socket.IO',
+    ],
+    githubUrl: 'https://github.com/emillier6/battleship-boardgame',
+  },
+  {
+    title: 'ColdTruck Anomaly Detector',
+    description:
+      'Embedded EdgeAI system for cold-chain logistics: a TinyML model running on an ESP32 detects truck accidents and rollovers in real time, with Wi-Fi telemetry, BLE app interaction and safety alerts.',
+    tags: ['C', 'C++', 'ESP32', 'TinyML', 'Edge Impulse', 'PlatformIO'],
+    githubUrl: 'https://github.com/emillier6/XASF-ColdTruck',
+  },
+  {
+    title: 'Container Terminal Manager',
+    description:
+      'Automated management system for a cargo container terminal, built in C++ for the Data Structures course at UPC.',
+    tags: ['C++', 'Data Structures', 'Algorithms'],
+    githubUrl: 'https://github.com/emillier6/Container-Terminal---ESIN',
+  },
+  {
+    title: 'Oust: The Game',
+    description:
+      'Java implementation of Oust, the abstract strategy board game, developed as a team project for the Programming Projects course at UPC.',
+    tags: ['Java', 'OOP', 'Team Project'],
+    githubUrl: 'https://github.com/emillier6/PROP-Projecte-25-26',
+  },
+  {
+    title: 'Space Invaders Retro',
+    description:
+      'Clone of the classic Space Invaders arcade game in C++, rendering through an OpenGL 3.3 context with GLFW and GLEW as the only dependencies.',
+    tags: ['C++', 'OpenGL', 'GLFW', 'GLEW'],
+    githubUrl: 'https://github.com/emillier6/Space-Inviders-RETRO',
+  },
+];
 
 export const SOCIAL_LINKS = [
   {

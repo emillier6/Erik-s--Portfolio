@@ -7,7 +7,7 @@ const links = [
   { label: 'About', href: '#about' },
   { label: 'Education', href: '#education' },
   // Projects section is hidden while PROJECTS is empty
-  ...(PROJECTS.length > 0 ? [{ label: 'Work', href: '#projects' }] : []),
+  ...(PROJECTS.length > 0 ? [{ label: 'Projects', href: '#projects' }] : []),
   { label: 'Skills', href: '#skills' },
   { label: 'Contact', href: '#contact' },
 ];
