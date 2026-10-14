@@ -19,7 +19,7 @@ export const PROFILE = {
  * It is designed to be public, so it is safe to commit. Create one for
  * PROFILE.email and paste it here — until then the form reports an error.
  */
-export const WEB3FORMS_ACCESS_KEY = '';
+export const WEB3FORMS_ACCESS_KEY = 'cd71b2c7-d34f-4c53-bffa-2646bac56f1b';
 
 /** Roles cycled by the hero typewriter */
 export const ROLES = ['Full Stack Developer', 'React Engineer'] as const;
